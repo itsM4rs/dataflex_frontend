@@ -5,9 +5,7 @@ class SplashPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: FadingText('Loading...'),
-      ),
+      body: FadingText('Loading...'),
     );
   }
 }
