@@ -5,11 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'data/repositories/category_repo.dart';
-import 'data/repositories/item_repo.dart';
 import 'data/repositories/user_repo.dart';
 import 'logic/bloc/authentication_bloc/authentication_bloc.dart';
 import 'logic/bloc/category_bloc/category_bloc.dart';
-import 'logic/bloc/item_bloc/item_bloc.dart';
 import 'presentation/pages/home_page.dart';
 import 'presentation/pages/login_page.dart';
 import 'presentation/pages/splash_page.dart';
