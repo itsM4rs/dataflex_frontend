@@ -12,6 +12,8 @@ class _LoginFormState extends State<LoginForm> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
 
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     _onLoginButtonPressed() {
@@ -37,6 +39,7 @@ class _LoginFormState extends State<LoginForm> {
         builder: (context, state) {
           return Container(
             child: Form(
+              key: _formKey,
               child: Padding(
                 padding: EdgeInsets.all(40.0),
                 child: Column(
@@ -44,8 +47,17 @@ class _LoginFormState extends State<LoginForm> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     TextFormField(
-                      validator: (value) =>
-                          value.length >= 4 ? null : 'Username is too short',
+                      validator: (value) {
+                        if (value.isNotEmpty) {
+                          if (value.length < 4) {
+                            return 'Username is too short';
+                          } else {
+                            return null;
+                          }
+                        } else {
+                          return 'Please enter Username';
+                        }
+                      },
                       decoration: InputDecoration(
                         labelText: 'username',
                         icon: Icon(Icons.person),
@@ -53,8 +65,17 @@ class _LoginFormState extends State<LoginForm> {
                       controller: _usernameController,
                     ),
                     TextFormField(
-                      validator: (value) =>
-                          value.length >= 8 ? null : 'Password is too short',
+                      validator: (value) {
+                        if (value.isNotEmpty) {
+                          if (value.length < 8) {
+                            return 'Password is too short';
+                          } else {
+                            return null;
+                          }
+                        } else {
+                          return 'Please enter password';
+                        }
+                      },
                       decoration: InputDecoration(
                         labelText: 'password',
                         icon: Icon(Icons.security),
@@ -63,12 +84,26 @@ class _LoginFormState extends State<LoginForm> {
                       obscureText: true,
                     ),
                     const SizedBox(height: 10),
-                    ElevatedButton(
-                      onPressed:
-                          state is! LoginLoading ? _onLoginButtonPressed : null,
-                      child: Text(
-                        'Login',
-                        style: TextStyle(fontSize: 20.0),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: ElevatedButton(
+                        onPressed:
+                            //state is! LoginLoading ? _onLoginButtonPressed : null,
+                            () {
+                          if (_formKey.currentState.validate()) {
+                            if (state is! LoginLoading) {
+                              return _onLoginButtonPressed();
+                            } else {
+                              return null;
+                            }
+                          } else {
+                            print('Something went wrong...');
+                          }
+                        },
+                        child: Text(
+                          'Login',
+                          style: TextStyle(fontSize: 20.0),
+                        ),
                       ),
                     ),
                     Container(
